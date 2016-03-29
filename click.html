@@ -43,7 +43,7 @@
 				mylist[i].onclick=function(){
 						for(i=0;i<mylist.length;i++){
 						   if (mylist[i]!=this){
-                              mylist[i].style.background="none";
+                              mylist[i].style.backgroundColor="transparent";
                                //1.为什么在之前没加这一句，在this那里用mylist[i].style.background他会提示mulist[i]不是一个object呢？
 						      mylist[i].getElementsByTagName("audio")[0].pause();
 					
@@ -81,8 +81,16 @@
                             var myMusic=mylist[i].getElementsByTagName("audio")[0];
                             if(myMusic==currM){
                                 var next=(i+1)%mylist.length;
+                                mylist[i].style.background="none";
+                                console.log(mylist[i].style.background);
+                                //a
                                 currM=mylist[next].getElementsByTagName("audio")[0];
+                                mylist[next].style.backgroundColor="deeppink";
+                                console.log(mylist[next]);
+                                //mylist[i].style.backgroundColor="none";
+                                currM.load();
                                 currM.play();
+                                
                                 break;
                                 
                             }
@@ -90,10 +98,6 @@
                         
                     }
                   } 
-        function a(){
-            console.log(mylist[3]);
-            
-        }
         
         setInterval(fullLoop,3000);
             
@@ -108,7 +112,7 @@
 <div>
     <h3>歌曲播放列表</h3>
     <ul id="list">
-    <li><audio src="./时间煮雨.mp3" ></audio><a href="#">1. 时间煮雨</a></li>
+    <li><audio src="./时间煮雨.mp3" controls="controls"></audio><a href="#">1. 时间煮雨</a></li>
 	<li><audio src="./浪漫手机.mp3" ></audio><a href="#">2. 浪漫手机</a></li>  <!-- <a href="#"> -->
 	<li><audio src="./情缠.mp3" ></audio><a href="#">3. 情缠</a></li>
 <!--	<li><audio src="" ></audio><a href="#">歌曲4</a></li>-->
