@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+	<meta charset=UTF-8>
+	<title>click test</title>
+	<style>
+        div{
+            margin: auto;
+            width: 300px;
+            border: 3px solid black;
+            background-color:floralwhite;
+        }
+        h3{
+            text-align: center;
+        
+        }
+        ul{
+           margin-left: 50px;
+        }
+        ul li{
+            width: 130px;
+            
+        }
+        ul li a{
+            text-decoration:none;
+            color:black;
+        }
+        ul li a:hover{
+            color:orange;
+            
+        }
+    </style>
+	<script type="text/javascript">
+	window.onload=function(){
+		//console.log("姑姑是个大笨猪！！！\n大家都不要喜欢他！！！")
+		 var myul=document.getElementById("list");
+		 var mylist=myul.getElementsByTagName("li");
+		//var mylist=document.getElementById("list").children;//children不包含空白节点，childNodes包含
+         var currM=null;
+         var beforeM=null;
+		for(var i=0;i<mylist.length;i++){
+			
+				mylist[i].onclick=function(){
+						for(i=0;i<mylist.length;i++){
+						   if (mylist[i]!=this){
+                              mylist[i].style.background="none";
+                               //1.为什么在之前没加这一句，在this那里用mylist[i].style.background他会提示mulist[i]不是一个object呢？
+						      mylist[i].getElementsByTagName("audio")[0].pause();
+					
+                           }
+                        }
+					this.style.backgroundColor="deeppink";  //2.为什么这里的this不是window呢？
+					currM=this.getElementsByTagName("audio")[0];
+                    if(currM==beforeM){
+                        if(currM.paused){
+                          currM.play();  
+                        }
+                        else{
+                            currM.pause();
+                        }
+                        //this.getElementsByTagName("audio")[0].play();
+                    
+                    }
+                    else{
+                        currM.load();
+                        currM.play();
+                    }
+                    
+                    
+                    
+                    beforeM=currM;
+				}
+            
+			}
+        
+        
+         function fullLoop(){
+                    if((currM!=null)&&currM.ended){
+                        //var nextM =(parseInt(mylist.indexOf(currM))-1)%mylist.length;
+                        for(i=0;i<mylist.length;i++){
+                            var myMusic=mylist[i].getElementsByTagName("audio")[0];
+                            if(myMusic==currM){
+                                var next=(i+1)%mylist.length;
+                                currM=mylist[next].getElementsByTagName("audio")[0];
+                                currM.play();
+                                break;
+                                
+                            }
+                        }
+                        
+                    }
+                  } 
+        function a(){
+            console.log(mylist[3]);
+            
+        }
+        
+        setInterval(fullLoop,3000);
+            
+        
+		}
+	
+
+
+	</script>
+</head>
+<body>
+<div>
+    <h3>歌曲播放列表</h3>
+    <ul id="list">
+    <li><audio src="./时间煮雨.mp3" ></audio><a href="#">1. 时间煮雨</a></li>
+	<li><audio src="./浪漫手机.mp3" ></audio><a href="#">2. 浪漫手机</a></li>  <!-- <a href="#"> -->
+	<li><audio src="./情缠.mp3" ></audio><a href="#">3. 情缠</a></li>
+<!--	<li><audio src="" ></audio><a href="#">歌曲4</a></li>-->
+<!--	<li><audio src="" loop="loop"></audio><a href="#">歌曲5</a></li>-->
+    </ul>
+    <br/>
+    <hr/>
+    
+    <p>注：点击播放音乐，当音乐播放时再点击该音乐实现【暂停】【继续】功能。点击其他音乐时从头播放选中音乐。</p>
+</div>
+</body>
+</html>
